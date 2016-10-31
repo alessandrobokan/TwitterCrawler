@@ -1,0 +1,6 @@
+*.pyc
+*.swp
+*.rdb
+*.log
+*.json
+.idea/

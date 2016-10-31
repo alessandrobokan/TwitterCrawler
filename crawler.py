@@ -93,10 +93,14 @@ def crawl(url, filename, n_scrolls=10):
             'username': username,
             'retweet': retweet
         })
-        print '\n\t[{0}] {1}'.format(j + 1, tweet.strip().encode('utf-8'))
+        print '\n\t[{0}] {1}'.format(
+            j + 1, tweet.replace('\n', ' ').strip().encode('utf-8')
+        )
         # Write the output file
         f.write(body + '\n')
+        # Increase counter
         j += 1
+
     print '\nCrawling finished!!! See file "{0}"\n'.format(filename)
     # Close file
     f.close()
