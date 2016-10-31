@@ -13,28 +13,11 @@ from selenium import webdriver
 
 from datetime import datetime
 
+from utils import is_valid_file
+
 import time
 import codecs
 import json
-import os
-
-
-def is_valid_file(parser, filename, type='json'):
-    """
-    Function to verify if file exists and if is "json" format.
-
-    :param parser: ArgumentParser object
-    :param filename: str: filename
-    :param type: str: json format
-    :return: str: filename
-
-    """
-    if not os.path.exists(filename):
-        parser.error("the file \"%s\" does not exist!" % filename)
-    elif not filename.endswith("." + type):
-        parser.error("\"%s\" is not a %s file!" % (filename, type))
-    else:
-        return filename  # return filename
 
 
 def crawl(url, filename, n_scrolls=10):

@@ -12,34 +12,18 @@ from argparse import ArgumentParser
 
 from nltk.corpus import stopwords as sw
 
+from utils import is_valid_file
+
 import codecs
 import json
 import re
-import os
+
 
 stopwords = sw.words('english')
 
 cmd_tweet = re.compile('(\s|^)?http[s]?://(?:[a-zA-Z]|[0-9]|[$-_@.&+]|[!*\(\),]|(?:%[0-9a-fA-F][0-9a-fA-F]))+')
 
 cmd_words = re.compile('(#|@|\.|,|;|:|\(|\)|\[|\]|\{|\}|\_|\")')
-
-
-def is_valid_file(parser, filename, type='json'):
-    """
-    Function to verify if file exists and if is "json" format.
-
-    :param parser: ArgumentParser object
-    :param filename: str: filename
-    :param type: str: json format
-    :return: str: filename
-
-    """
-    if not os.path.exists(filename):
-        parser.error("the file \"%s\" does not exist!" % filename)
-    elif not filename.endswith("." + type):
-        parser.error("\"%s\" is not a %s file!" % (filename, type))
-    else:
-        return filename  # return filename
 
 
 def get_words(tweet):
@@ -131,9 +115,11 @@ def filter(tweets_filename, keywords, threshold=3):
     filtered_tweets = sorted(filtered_tweets, key=lambda tup: tup[2])
     # Close file
     f.close()
+
     # -------------------------------------------------------------------------
     # ------------------------------ Write output -----------------------------
     # -------------------------------------------------------------------------
+
     output = '{0}_filtered.json'.format(tweets_filename[:-5])
     # Open output file
     f = codecs.open(output, 'w', 'UTF-8')
